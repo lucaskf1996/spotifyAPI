@@ -15,7 +15,7 @@ var cookieParser = require('cookie-parser');
 
 var client_id = '76f08ee2dc4e47eb91db2b6d1ca02df4'; // Your client id
 var client_secret = '3ff60f0d36ac4c9c87c7313c145b3857'; // Your secret
-var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
+var redirect_uri = 'https://spotifyapiback.herokuapp.com/callback'; // Your redirect uri
 
 /**
  * Generates a random string containing numbers and letters
@@ -144,4 +144,4 @@ app.get('/refresh_token', function(req, res) {
 });
 
 console.log('Listening on 8888');
-app.listen(8888);
+app.listen(process.env.PORT);
