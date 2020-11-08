@@ -12,7 +12,7 @@ var request = require('request'); // "Request" library
 var cors = require('cors');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
-require("dotenv").config();
+// require("dotenv").config();
 const aws = require('aws-sdk');
 
 let s3 = new aws.S3({
