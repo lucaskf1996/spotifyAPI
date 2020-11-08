@@ -16,8 +16,8 @@ require("dotenv").config();
 const aws = require('aws-sdk');
 
 let s3 = new aws.S3({
-  client_id: process.env.S3_KEY,
-  client_secret: process.env.S3_SECRET
+  client_id: process.env.client_id,
+  client_secret: process.env.client_secret
 });
 
 // var client_id = '76f08ee2dc4e47eb91db2b6d1ca02df4'; // Your client id
