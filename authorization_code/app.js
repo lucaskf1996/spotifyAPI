@@ -58,7 +58,7 @@ app.get('/login', function(req, res) {
   res.redirect('https://accounts.spotify.com/authorize?' +
     querystring.stringify({
       response_type: 'code',
-      client_id: s3.client_id,
+      client_id: s3.config.client_id,
       scope: scope,
       redirect_uri: redirect_uri,
       state: state
@@ -89,7 +89,7 @@ app.get('/callback', function(req, res) {
         grant_type: 'authorization_code'
       },
       headers: {
-        'Authorization': 'Basic ' + (new Buffer(s3.client_id + ':' + s3.client_secret).toString('base64'))
+        'Authorization': 'Basic ' + (new Buffer(s3.config.client_id + ':' + s3.config.client_secret).toString('base64'))
       },
       json: true
     };
@@ -133,7 +133,7 @@ app.get('/refresh_token', function(req, res) {
   var refresh_token = req.query.refresh_token;
   var authOptions = {
     url: 'https://accounts.spotify.com/api/token',
-    headers: { 'Authorization': 'Basic ' + (new Buffer(s3.client_id + ':' + s3.client_secret).toString('base64')) },
+    headers: { 'Authorization': 'Basic ' + (new Buffer(s3.config.client_id + ':' + s3.config.client_secret).toString('base64')) },
     form: {
       grant_type: 'refresh_token',
       refresh_token: refresh_token
