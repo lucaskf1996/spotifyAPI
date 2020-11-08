@@ -19,7 +19,6 @@ let s3 = new aws.S3({
   client_id: process.env.client_id,
   client_secret: process.env.client_secret
 });
-console.log(s3.config)
 
 // var client_id = '76f08ee2dc4e47eb91db2b6d1ca02df4'; // Your client id
 // var client_secret = '3ff60f0d36ac4c9c87c7313c145b3857'; // Your secret
