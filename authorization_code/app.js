@@ -13,8 +13,15 @@ var cors = require('cors');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 
-var client_id = '76f08ee2dc4e47eb91db2b6d1ca02df4'; // Your client id
-var client_secret = '3ff60f0d36ac4c9c87c7313c145b3857'; // Your secret
+const aws = require('aws-sdk');
+
+let s3 = new aws.S3({
+  client_id: process.env.S3_KEY,
+  client_secret: process.env.S3_SECRET
+});
+
+// var client_id = '76f08ee2dc4e47eb91db2b6d1ca02df4'; // Your client id
+// var client_secret = '3ff60f0d36ac4c9c87c7313c145b3857'; // Your secret
 var redirect_uri = 'https://spotifyapiback.herokuapp.com/callback'; // Your redirect uri https://localhost:8888/callback
 
 /**
@@ -50,7 +57,7 @@ app.get('/login', function(req, res) {
   res.redirect('https://accounts.spotify.com/authorize?' +
     querystring.stringify({
       response_type: 'code',
-      client_id: client_id,
+      client_id: s3.client_id,
       scope: scope,
       redirect_uri: redirect_uri,
       state: state
@@ -81,7 +88,7 @@ app.get('/callback', function(req, res) {
         grant_type: 'authorization_code'
       },
       headers: {
-        'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
+        'Authorization': 'Basic ' + (new Buffer(s3.client_id + ':' + s3.client_secret).toString('base64'))
       },
       json: true
     };
@@ -125,7 +132,7 @@ app.get('/refresh_token', function(req, res) {
   var refresh_token = req.query.refresh_token;
   var authOptions = {
     url: 'https://accounts.spotify.com/api/token',
-    headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) },
+    headers: { 'Authorization': 'Basic ' + (new Buffer(s3.client_id + ':' + s3.client_secret).toString('base64')) },
     form: {
       grant_type: 'refresh_token',
       refresh_token: refresh_token
